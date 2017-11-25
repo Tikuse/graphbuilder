@@ -19,11 +19,11 @@
                 <p>График:</p>
                 <div id='jxgbox' class='jxgbox' style='height:400px;'></div>       
             </div>
-            <div class="col-lg-3 forMedia">
+            <div class="col-lg-3">
                 <p>Список команд:</p>
                 <form action="#">
                     <div class="divsList" id="A">
-                        <div class="ElementList" data-action="up">Поднять перо</div>
+                        <div class="ElementList up" data-action="up">Поднять перо</div>
                         <div class="ElementList down" data-action="down">Опустить перо</div>
                         <div class="ElementList moveToPoint" data-action="moveToPoint">Сместить в точку (<input type="text" class="coordinateX" required placeholder="X">, <input type="text" class="coordinateY" required placeholder="Y">)</div>
                         <div class="ElementList moveToVector" data-action="moveToVector">Сместить на вектор (<input type="text" class="vectorX" required placeholder="X">, <input type="text" class="vectorY" required placeholder="Y">)</div>
@@ -37,41 +37,6 @@
 
                 </div>
                 <button class="btn btn-success execute">Запустить</button>
-                <button class="btn btn-danger save">Сохранить</button>
-                <button class="btn btn-primary saveList" data-toggle="modal" data-target="#myModal">Список сохранений</button>
-                <div class="alert alert-success">
-                    <strong>Сохранено!</strong>
-                </div>
-                <!-- Modal -->
-                <div id="myModal" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-                
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        
-                        <h4 class="modal-title">Сохранения</h4>
-                      </div>
-                      <div class="modal-body">
-                        <table class="table table-hover">
-                            <thead>
-                              <tr>
-                                <th>Имя</th>
-                                <th>Дата</th>  
-                              </tr>
-                            </thead>
-                            <tbody class="saveBank">
-
-                            </tbody>
-                          </table>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                      </div>
-                    </div>
-                
-                  </div>
-                </div>
             </div>
             </div>
         </div>
@@ -107,7 +72,6 @@
         });
         
     </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
        
 </body>
 </html>

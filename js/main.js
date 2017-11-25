@@ -1,4 +1,6 @@
 var cmdHistory = [];
+if (!localStorage.getItem('__saves__'))
+    localStorage.setItem('__saves__' ,JSON.stringify([]));
 function getCoords(el){
     var x,y;
     console.log(el);
@@ -12,10 +14,27 @@ function getCoords(el){
 var cmd = function(e) {
     executeCmd(parseCmd(e.target));
 };
-$('.up').on('dblclick', cmd);
-$('.down').on('dblclick', cmd);
-$('.moveToPoint').on('dblclick', cmd);
-$('.moveToVector').on('dblclick', cmd);
+$('[data-action="up"]').on('dblclick', cmd);
+$('[data-action="down"]').on('dblclick', cmd);
+$('[data-action="moveToPoint"]').on('dblclick', cmd);
+$('[data-action="moveToVector"]').on('dblclick', cmd);
+$('.save').on('click', function(){
+    save();
+    $('.alert').css("display", "block");
+    setTimeout(function() {$('.alert').css("display", "none")}, 2000);
+});
+$('.saveList').on('click', function (e) {
+    var id = 0;
+    $('.saveBank').text('');
+    for (var save of loadAllSaves()) {
+        var saveEntry = $("<tr></tr>").html('<td><a  href="#" class="nameSaved save-'+id+'">График</a></td>\n' +
+            '<td class="dateSaved">' + save.date + '</td>');
+        $('.saveBank').append(saveEntry);
+        $('.save-'+id).on('click', restore.bind(null,save));
+        id++;
+    }
+    }
+);
 
 function parseCmd(el) {
     var cmd = {command: el.getAttribute('data-action')};
@@ -27,11 +46,6 @@ function parseCmd(el) {
 function parseCmdList() {
     var list = [];
     $('.commandList').children('.ElementList').each(function (_,el) {
-        // var cmd = {command: el.getAttribute('data-action')};
-        // if (cmd.command === 'moveToPoint' || cmd.command ==='moveToVector'){
-        //     cmd.coords = getCoords(el);
-        //     }
-
         list.push(parseCmd(el));
     });
     console.log(list);
@@ -67,13 +81,14 @@ function executeCmd(cmd){
     }
 }
 function executeCmdList(list) {
-    // if (!validateCmdList()) {
-    //     console.log("not valid");
-    //     return false;
-    // }
-    var funcList = [],f;
+    // var funcList = [],f;
     for(var cmd of list){
-        console.log(cmd);
+        // if (cmd.command == 'for'){
+        //     var forCmds = [], cmd2;
+        //     while (list.length>0 || fu){
+        //
+        //     }
+        // }
         executeCmd(cmd);
     }
 
@@ -83,3 +98,23 @@ function executeCmdList(list) {
 $('.execute').on('click', function () {
     executeCmdList(parseCmdList());
 });
+
+function save() {
+    var save = {commands: cmdHistory, date: new Date()};
+    var saves = JSON.parse(localStorage.getItem('__saves__'));
+    saves.push(save);
+    localStorage.setItem('__saves__',JSON.stringify(saves));
+}
+function loadAllSaves() {
+    var saves = JSON.parse(localStorage.getItem('__saves__'));
+    return saves;
+}
+function restore(save) {
+    JXG.JSXGraph.freeBoard(board);
+    pen.x = pen.y = 0;
+    board = JXG.JSXGraph.initBoard('jxgbox',
+        {keepaspectratio: true, boundingbox: [-5, 5, 5, -5], axis:true}
+    );
+    pen.view = board.create('point',[0,0],Object.assign({},pointParams,{color: "black"}))
+    executeCmdList(save.commands);
+}
