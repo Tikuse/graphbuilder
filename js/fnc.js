@@ -2,7 +2,7 @@ var board = JXG.JSXGraph.initBoard('jxgbox',
     {keepaspectratio: true, boundingbox: [-5, 5, 5, -5], axis:true}
     );
 var pointParams = {size: 1,style:{color:'black',fixed:true}};
-var availableCommands = ['up','down','moveToPoint','moveToVector'];
+var availableCommands = ['up','down','moveToPoint','moveToVector','for','end'];
 var pen = {x:0,y:0, active: false,
     view: board.create('point',[0,0],Object.assign({},pointParams,{color: "black"}))
 };

@@ -41,6 +41,9 @@ function parseCmd(el) {
     if (cmd.command === 'moveToPoint' || cmd.command ==='moveToVector'){
         cmd.coords = getCoords(el);
     }
+    else if (cmd.command === 'for' || cmd.command ==='moveToVector'){
+        cmd.iterations = +el.children[0].value;
+    }
     return cmd;
 }
 function parseCmdList() {
@@ -82,16 +85,57 @@ function executeCmd(cmd){
 }
 function executeCmdList(list) {
     // var funcList = [],f;
-    for(var cmd of list){
-        // if (cmd.command == 'for'){
-        //     var forCmds = [], cmd2;
-        //     while (list.length>0 || fu){
-        //
-        //     }
-        // }
-        executeCmd(cmd);
+    // for(var cmd of list){
+    //     if (cmd.command === 'for'){
+    //         var forCmds = [],
+    //             cmd2, endFound = false;
+    //         while (list.length>0){
+    //             cmd2 = list.shift();
+    //             forCmds.push(cmd2);
+    //             if (cmd2.command==='end'){
+    //                 endFound = true;
+    //                 break;
+    //             }
+    //         }
+    //         if (endFound) {
+    //             console.log("---",forCmds);
+    //             for (var i = 0; i < 3; i++)
+    //                 executeCmdList(forCmds)
+    //         }
+    //         else
+    //             break;
+    //     }
+    //     executeCmd(cmd);
+    // }
+    console.log(333);
+    var counterFor = 0,
+        counterEnd = 0;
+    for(var cmd of list) {
+        if (cmd.command === 'for')
+            counterFor++;
+        else if (cmd.command === 'end') {
+            counterEnd++;
+            if (counterEnd > counterFor)
+                return false;
+        }
     }
+    if (counterFor === counterEnd){
+        while (list.length>0){
+            console.log(1);
+            var cmd = list.shift();
+            if (cmd.command === 'for'){
+                var eindex = list.map(function(c){return c.command}).lastIndexOf('end');
+                var cmdsInLoop = list.splice(0,eindex);
 
+                for(var i = 0; i<cmd.iterations;i++){
+                    cmds = cmdsInLoop.slice(0,cmdsInLoop.length);
+                    console.log(777,cmds);
+                    executeCmdList(cmds);
+                }
+            }
+            executeCmd(cmd);
+        }
+    }
     return true;
 }
 
