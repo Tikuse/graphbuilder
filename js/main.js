@@ -1,0 +1,1 @@
+document.getElementsByClassName('up')[0]

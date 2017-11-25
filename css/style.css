@@ -1,0 +1,32 @@
+h1{
+    text-align: center;
+}
+
+.ElementList{
+    background-color: #006E2E;
+    color: #fff;
+    padding: 4px;
+    border-radius: 4px; 
+    margin-bottom: 5px;
+    width:60%;
+}
+
+.coordinateY, .coordinateX{
+    width: 35px;
+    text-align: center;
+    height: 20px;
+    padding-bottom: 2px;
+}
+
+.vectorY, .vectorX{
+    width: 35px;
+    text-align: center;
+    height: 20px;
+    padding-bottom: 2px;
+}
+
+.AreaOptions{
+    border:1px solid #ccc;
+    height:50%;
+    margin-bottom:10px;
+}
