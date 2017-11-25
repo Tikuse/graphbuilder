@@ -3,7 +3,7 @@ if (!localStorage.getItem('__saves__'))
     localStorage.setItem('__saves__' ,JSON.stringify([]));
 function getCoords(el){
     var x,y;
-    console.log(el);
+    // console.log(el);
     if (el && el.children) {
         x = +el.children[0].value;
         y = +el.children[1].value;
@@ -14,28 +14,6 @@ function getCoords(el){
 var cmd = function(e) {
     executeCmd(parseCmd(e.target));
 };
-$('[data-action="up"]').on('dblclick', cmd);
-$('[data-action="down"]').on('dblclick', cmd);
-$('[data-action="moveToPoint"]').on('dblclick', cmd);
-$('[data-action="moveToVector"]').on('dblclick', cmd);
-$('.save').on('click', function(){
-    save();
-    $('.alert').css("display", "block");
-    setTimeout(function() {$('.alert').css("display", "none")}, 2000);
-});
-$('.saveList').on('click', function (e) {
-    var id = 0;
-    $('.saveBank').text('');
-    for (var save of loadAllSaves()) {
-        var saveEntry = $("<tr></tr>").html('<td><a  href="#" class="nameSaved save-'+id+'">График</a></td>\n' +
-            '<td class="dateSaved">' + save.date + '</td>');
-        $('.saveBank').append(saveEntry);
-        $('.save-'+id).on('click', restore.bind(null,save));
-        id++;
-    }
-    }
-);
-
 function parseCmd(el) {
     var cmd = {command: el.getAttribute('data-action')};
     if (cmd.command === 'moveToPoint' || cmd.command ==='moveToVector'){
@@ -51,7 +29,7 @@ function parseCmdList() {
     $('.commandList').children('.ElementList').each(function (_,el) {
         list.push(parseCmd(el));
     });
-    console.log(list);
+    // console.log(list);
     return list;
 }
 
@@ -63,7 +41,7 @@ function validateCmdList(list) {
     return true;
 }
 function validateCmd(cmd) {
-    console.log(cmd);
+    // console.log(cmd);
     if(availableCommands.indexOf(cmd.command)===-1)
         return false;
     if(cmd.command === 'moveToPoint' || cmd.command ==='moveToVector')
@@ -84,30 +62,7 @@ function executeCmd(cmd){
     }
 }
 function executeCmdList(list) {
-    // var funcList = [],f;
-    // for(var cmd of list){
-    //     if (cmd.command === 'for'){
-    //         var forCmds = [],
-    //             cmd2, endFound = false;
-    //         while (list.length>0){
-    //             cmd2 = list.shift();
-    //             forCmds.push(cmd2);
-    //             if (cmd2.command==='end'){
-    //                 endFound = true;
-    //                 break;
-    //             }
-    //         }
-    //         if (endFound) {
-    //             console.log("---",forCmds);
-    //             for (var i = 0; i < 3; i++)
-    //                 executeCmdList(forCmds)
-    //         }
-    //         else
-    //             break;
-    //     }
-    //     executeCmd(cmd);
-    // }
-    console.log(333);
+    // console.log(333);
     var counterFor = 0,
         counterEnd = 0;
     for(var cmd of list) {
@@ -121,7 +76,7 @@ function executeCmdList(list) {
     }
     if (counterFor === counterEnd){
         while (list.length>0){
-            console.log(1);
+            // console.log(1);
             var cmd = list.shift();
             if (cmd.command === 'for'){
                 var eindex = list.map(function(c){return c.command}).lastIndexOf('end');
@@ -129,7 +84,7 @@ function executeCmdList(list) {
 
                 for(var i = 0; i<cmd.iterations;i++){
                     cmds = cmdsInLoop.slice(0,cmdsInLoop.length);
-                    console.log(777,cmds);
+                    // console.log(777,cmds);
                     executeCmdList(cmds);
                 }
             }
@@ -138,10 +93,6 @@ function executeCmdList(list) {
     }
     return true;
 }
-
-$('.execute').on('click', function () {
-    executeCmdList(parseCmdList());
-});
 
 function save() {
     var save = {commands: cmdHistory, date: new Date()};
@@ -154,11 +105,17 @@ function loadAllSaves() {
     return saves;
 }
 function restore(save) {
+    var cmds = save.commands.filter(function(s){return s.command!=='for' && s.command!=='end'});
+    clearGraph();
+    executeCmdList(cmds);
+}
+
+function clearGraph(){
+    cmdHistory = [];
     JXG.JSXGraph.freeBoard(board);
     pen.x = pen.y = 0;
     board = JXG.JSXGraph.initBoard('jxgbox',
         {keepaspectratio: true, boundingbox: [-5, 5, 5, -5], axis:true}
     );
     pen.view = board.create('point',[0,0],Object.assign({},pointParams,{color: "black"}))
-    executeCmdList(save.commands);
 }

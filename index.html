@@ -25,8 +25,8 @@
                     <div class="divsList" id="A">
                         <div class="ElementList" data-action="up">Поднять перо</div>
                         <div class="ElementList" data-action="down">Опустить перо</div>
-                        <div class="ElementList" data-action="for">For (<input type="text" class="iterations" required placeholder="X">)</div>
-                        <div class="ElementList" data-action="end">End</div>
+                        <div class="ElementList for" data-action="for">For (<input type="text" class="iterations" required placeholder="Повтор">)</div>
+                        <div class="ElementList end" data-action="end">End</div>
                         <div class="ElementList" data-action="moveToPoint">Сместить в точку (<input type="text" class="coordinateX" required placeholder="X">, <input type="text" class="coordinateY" required placeholder="Y">)</div>
                         <div class="ElementList" data-action="moveToVector">Сместить на вектор (<input type="text" class="vectorX" required placeholder="X">, <input type="text" class="vectorY" required placeholder="Y">)</div>
                     </div>
@@ -36,11 +36,13 @@
             <div class="col-lg-4">
                 <p>На выполение:</p>
                 <div class="AreaOptions commandList" id="B">
-
+                    <h3 class="forAreaText">Перетащи сюда!</h3>
                 </div>
                 <button class="btn btn-success execute">Запустить</button>
                 <button class="btn btn-danger save">Сохранить</button>
                 <button class="btn btn-primary saveList" data-toggle="modal" data-target="#myModal">Список сохранений</button>
+                <button class="btn btn-warning clearGraph">Очистить график</button>
+                <button class="btn btn-info clearOnRun">Очистить поле выполнения</button>
                 <div class="alert alert-success">
                     <strong>Сохранено!</strong>
                 </div>
@@ -68,6 +70,7 @@
                           </table>
                       </div>
                       <div class="modal-footer">
+                        <button class="btn btn-warning clearStorage" onclick="localStorage.clear();">Очистить</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                       </div>
                     </div>
@@ -81,8 +84,9 @@
   
     <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="js/fnc.js"></script>
+    <script type="text/javascript" src="js/graphFunctions.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/events.js"></script>
     <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
     <script>
         Sortable.create(A, {
@@ -102,7 +106,7 @@
             sort: true, 
             onAdd: function (evt) {
                 var el = evt.item;
-                el.setAttribute('data-name', 'true')
+                $('.forAreaText').remove();
                 el.innerHTML += '<span onClick="this.parentNode.parentNode.removeChild(this.parentNode);" class="close"></span>';
             },
            
