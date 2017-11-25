@@ -3,12 +3,20 @@ h1{
 }
 
 .ElementList{
-    background-color: #006E2E;
+    background-color: #218838;
     color: #fff;
-    padding: 4px;
+    padding: 3px;
     border-radius: 4px; 
     margin-bottom: 5px;
     width:60%;
+}
+
+.ElementList:hover{
+    cursor: move;
+}
+
+.btn:hover{
+    cursor: pointer;
 }
 
 .coordinateY, .coordinateX{
@@ -26,7 +34,7 @@ h1{
 }
 
 .AreaOptions{
-    border:1px solid #ccc;
-    height:50%;
-    margin-bottom:10px;
+    border: 1px solid #ccc;
+    padding: 10px 0px 5px 7px;
+    margin-bottom: 10px;
 }
