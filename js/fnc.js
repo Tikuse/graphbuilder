@@ -4,14 +4,10 @@ var board = JXG.JSXGraph.initBoard('jxgbox',
 var pointParams = {size: 1,style:{color:'black',fixed:true}};
 var availableCommands = ['up','down','moveToPoint','moveToVector'];
 var pen = {x:0,y:0, active: false,
-    view: board.create('point',[0,0],Object.assign({},pointParams,{color: "black"})),
-    update: function () {
-        pen.view.moveTo([pen.x,pen.y]);
-        pen.view.set
-    }
+    view: board.create('point',[0,0],Object.assign({},pointParams,{color: "black"}))
 };
 function updatePen(){
-    pen.update();
+    pen.view.moveTo([pen.x,pen.y]);
 }
 function drawPoint(x,y){
     return  board.create('point',[x,y],pointParams);
@@ -35,7 +31,7 @@ function drawLineTo(x,y){
 function moveToPoint(x,y){
     console.log("move to point",x,y);
     if (pen.active) {
-        drawLineTo(pen.x + x, pen.y + y);
+        drawLineTo(x, y);
         drawPoint(pen.x, pen.y);
     }
     pen.x = x;
