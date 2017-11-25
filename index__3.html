@@ -9,17 +9,21 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container-fluid">
         <h1>"Чертежник"</h1>
         <hr>
         <div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <p>График:</p>
                 <div id='jxgbox' class='jxgbox' style='height:400px;'></div>       
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <p>Список команд:</p>
                 <form action="#">
                     <div class="divsList" id="A">
@@ -43,7 +47,6 @@
     </div>
   
     <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script type="text/javascript" src="js/fnc.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
@@ -54,21 +57,22 @@
             name: "shared",
             pull: "clone",
             put: false,
-            revertClone: true,
+            revertClone: true
             },
-            sort: false
+            sort: false,
+
         });
-        
+        var r2;
         Sortable.create(B, {
             
             group: "shared",
-            sort: true, 
-            onAdd: function (evt) {
-                var el = evt.item;
-                el.setAttribute('data-name', 'true')
-                el.innerHTML += '<span onClick="this.parentNode.parentNode.removeChild(this.parentNode);" class="close"></span>';
-            },
-           
+            sort: true
+//            ,
+//            onAdd: function(event){
+//                r2 = event;
+//                console.log(event.target);
+//                event.item.innerHTML+="<p1>222</p1>"
+//            }
         });
         
     </script>

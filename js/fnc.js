@@ -70,24 +70,24 @@ function executeCmdList(list) {
     for(var cmd of list){
         console.log(cmd);
         switch (cmd.command){
-            case 'up': f=up; break;
-            case 'down': f=down; break;
-            case 'moveToPoint': f=moveToPoint.bind(null,cmd.coords.x,cmd.coords.y); break;
-            case 'moveToVector':  f=moveToVector.bind(null,cmd.coords.x,cmd.coords.y); break;
+            case 'up': f=up(); break;
+            case 'down': f=down(); break;
+            case 'moveToPoint': f=moveToPoint(cmd.coords.x,cmd.coords.y); break;
+            case 'moveToVector':  f=moveToVector(cmd.coords.x,cmd.coords.y); break;
         }
-        funcList.push(f);
+        // funcList.push(f);
     }
-    console.log(funcList);
-    function i(f){
-        console.log(f);
-        window.setTimeout(function(){
-            f();
-            f2 = funcList.pop();
-            if(f2)
-                i(f2);
-        }, 1 * 1000);
-
-    }
-    i(funcList.pop());
+    // console.log(funcList);
+    // function i(f){
+    //     console.log(f);
+    //     window.setTimeout(function(){
+    //         f();
+    //         f2 = funcList.pop();
+    //         if(f2)
+    //             i(f2);
+    //     }, 1 * 1000);
+    //
+    // }
+    // i(funcList.pop());
     return true;
 }

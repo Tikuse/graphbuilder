@@ -8,7 +8,7 @@ h1{
     padding: 3px;
     border-radius: 4px; 
     margin-bottom: 5px;
-    width:60%;
+    width:100%;
 }
 
 .ElementList:hover{
@@ -38,3 +38,32 @@ h1{
     padding: 10px 0px 5px 7px;
     margin-bottom: 10px;
 }
+.AreaOptions .ElementList{
+    position:relative;
+    width:70%;
+}
+.close {
+    position: absolute;
+    right: 0px;
+    top: 3px;
+    width: 32px;
+    height: 32px;
+    opacity: 1 !important;
+    }
+    .close:hover{
+        cursor: pointer;
+    }
+    .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 23px;
+    width: 2px;
+    background-color: #fff;
+    }
+    .close:before {
+    transform: rotate(45deg);
+    }
+    .close:after {
+    transform: rotate(-45deg);
+    }
