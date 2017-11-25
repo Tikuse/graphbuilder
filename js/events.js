@@ -12,7 +12,7 @@ $('.saveList').on('click', function (e) {
         $('.saveBank').text('');
         for (var save of loadAllSaves()) {
             var saveEntry = $("<tr></tr>").html('<td><a  href="#" class="nameSaved save-'+id+'">График</a></td>\n' +
-                '<td class="dateSaved">' + save.date + '</td>');
+                '<td class="dateSaved">' + formatDate(save.date) + '</td>');
             $('.saveBank').append(saveEntry);
             $('.save-'+id).on('click', restore.bind(null,save));
             id++;
