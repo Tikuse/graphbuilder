@@ -3,11 +3,15 @@ var board = JXG.JSXGraph.initBoard('jxgbox',
     );
 var pointParams = {size: 1,style:{color:'black',fixed:true}};
 var availableCommands = ['up','down','moveToPoint','moveToVector'];
-var pen = {x:0,y:0, active: up,
-    view: board.create('point',[0,0],Object.assign({},pointParams,{color: "black"}))
-    };
+var pen = {x:0,y:0, active: false,
+    view: board.create('point',[0,0],Object.assign({},pointParams,{color: "black"})),
+    update: function () {
+        pen.view.moveTo([pen.x,pen.y]);
+        pen.view.set
+    }
+};
 function updatePen(){
-    pen.view.moveTo([pen.x,pen.y]);
+    pen.update();
 }
 function drawPoint(x,y){
     return  board.create('point',[x,y],pointParams);
@@ -21,9 +25,7 @@ function up(){
     pen.active = false;
 }
 function drawLineTo(x,y){
-    var line,
-        p1,
-        // p2;
+    var line;
     p1 = drawPoint(pen.x,pen.y);
     // p2 = drawPoint(x,y);
     line = board.create('line',[p1,[x,y]], {straightFirst:false, straightLast:false, strokeWidth:2});
@@ -32,20 +34,20 @@ function drawLineTo(x,y){
 }
 function moveToPoint(x,y){
     console.log("move to point",x,y);
-    if (pen.active)
-        drawLineTo(x,y);
-    else
-        drawPoint(pen.x,pen.y);
+    if (pen.active) {
+        drawLineTo(pen.x + x, pen.y + y);
+        drawPoint(pen.x, pen.y);
+    }
     pen.x = x;
     pen.y = y;
     updatePen();
 }
 function moveToVector(x,y){
     console.log("move to vector",x,y);
-    if (pen.active)
-        drawLineTo(pen.x+x,pen.y+y);
-    else
-        drawPoint(pen.x,pen.y);
+    if (pen.active) {
+        drawLineTo(pen.x + x, pen.y + y);
+        drawPoint(pen.x, pen.y);
+    }
     pen.x += x;
     pen.y += y;
     updatePen();
